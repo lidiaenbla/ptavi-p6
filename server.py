@@ -8,6 +8,7 @@ import socketserver
 import time
 import json
 import sys
+import os
 
 try:
     IP = sys.argv[1]
@@ -25,9 +26,8 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         Manejador
         """
         line = self.rfile.read()
-        print("El cliente nos manda ", line.decode('utf-8'))
+        print(line.decode('utf-8'))
         linea = line.decode('utf-8').split()
-        print("linea",linea)
         if linea[0] == "INVITE":
             if linea[1].split("@"):
                 self.wfile.write(b"SIP/2.0 100 Trying\r\n\r\n SIP/2.0 180 Ring\r\n\r\n SIP/2.0 200 OK\r\n\r\n")
@@ -36,7 +36,9 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         elif linea[0] == "BYE":
             self.wfile.write(b"200 OK\r\n\r\n")
         elif linea[0] == "ACK":
-            self.wfile.write(b"enviamos la cancion\r\n\r\n")
+            cancion = 'mp32rtp -i 127.0.0.1 -p 23032 < ' + FILE
+            os.system(cancion)
+            print("hemos enviado la cancion")
         else:
             self.wfile.write(b"SIP/2.0 405 Method Not Allowed\r\n\r\n")
 
