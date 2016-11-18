@@ -5,8 +5,6 @@ Clase (y programa principal) para un servidor de eco en UDP simple
 """
 
 import socketserver
-import time
-import json
 import sys
 import os
 
@@ -16,6 +14,7 @@ try:
     FILE = sys.argv[3]
 except IndexError:
     sys.exit("Usage: python3 server.py IP port audio_file")
+
 
 class SIPRegisterHandler(socketserver.DatagramRequestHandler):
     """
@@ -30,7 +29,9 @@ class SIPRegisterHandler(socketserver.DatagramRequestHandler):
         linea = line.decode('utf-8').split()
         if linea[0] == "INVITE":
             if linea[1].split("@"):
-                self.wfile.write(b"SIP/2.0 100 Trying\r\n\r\n SIP/2.0 180 Ring\r\n\r\n SIP/2.0 200 OK\r\n\r\n")
+                self.wfile.write(b"SIP/2.0 100 Trying\r\n\r\n ",
+                                 "SIP/2.0 180 Ring\r\n\r\n ",
+                                 "SIP/2.0 200 OK\r\n\r\n ")
             else:
                 self.wfile.write(b"SIP/2.0 400 Bad Request\r\n\r\n")
         elif linea[0] == "BYE":
