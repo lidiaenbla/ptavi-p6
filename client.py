@@ -16,9 +16,7 @@ except IndexError:
     sys.exit("Usage: python3 client.py method receiver@IP:SIPport")
 
 PORT = int(SIP_METHOD.split(":", -1)[1])
-SIP = SIP_METHOD.split(":", -1)[0]
-SERVER = SIP.split("@")[1]
-SIP = "sip:" + SIP + " SIP/2.0\r\n\r\n"
+SIP = "sip:" + SIP_METHOD.split(":", -1)[0] + " SIP/2.0\r\n\r\n"
 
 if METHOD == "INVITE":
     LINE = "INVITE " + SIP + "\r\n"
