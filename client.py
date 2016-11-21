@@ -21,7 +21,7 @@ SIP = "sip:" + SIP_METHOD.split(":", -1)[0] + " SIP/2.0\r\n"
 if METHOD == "INVITE":
     LINE = "INVITE " + SIP
 elif METHOD == "BYE":
-    LINE = "BYE " + SIP 
+    LINE = "BYE " + SIP
 
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as my_socket:
     my_socket.connect(('127.0.0.1', PORT))
